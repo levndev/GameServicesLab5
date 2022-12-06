@@ -220,7 +220,7 @@ if (shieldList.Count == 0)
 ### Доработать стилистическое оформление списка лидеров и системы достижений, реализованных в задании 1.
 1) Создать префаб для достижения
 !["screenshot"](Screenshots/3.PNG)
-1) Создать класс AchievementsMenu
+2) Создать класс AchievementsMenu
 ```cs
 public class AchievementsMenu : MonoBehaviour
 {
@@ -249,11 +249,11 @@ public class AchievementsMenu : MonoBehaviour
     }
 }
 ```
-1) Создать меню с ScrollView и повесить на него AchievementsMenu
+3) Создать меню с ScrollView и повесить на него AchievementsMenu
 !["screenshot"](Screenshots/1.gif)
-1) Для лидерборда взять префаб Leaderboard Advanced из плагина PluginYG
-2) Настроить префаб под наше приложение
-3) Создать меню с этим префабом
+4) Для лидерборда взять префаб Leaderboard Advanced из плагина PluginYG
+5) Настроить префаб под наше приложение
+6) Создать меню с этим префабом
 !["screenshot"](Screenshots/4.PNG)
 ## Выводы
 Научился:
