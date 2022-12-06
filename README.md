@@ -91,7 +91,8 @@ private void Quit()
 !["screenshot"](Screenshots/2.PNG)
 #### Работа 4: 
 1) Создать таблицу лидеров в консоли разработчика Яндекс игр
-2) Добавить сохранение рекорда очков в таблицу лидеров
+2) Добавить сохранение рекорда очков в таблицу лидеров <br>
+!["screenshot"](Screenshots/6.PNG)
 ```cs
 private void Quit()
 {
@@ -198,7 +199,7 @@ public class AchievementManager : MonoBehaviour
     }
 }
 ```
-4) Создать файлы достиженией в папке Resources/Achievements:
+4) Создать файлы достиженией в папке Resources/Achievements: <br>
 !["screenshot"](Screenshots/5.PNG)
 5) Регистрировать выполнение достижений по уникальному ID:
 ```cs
