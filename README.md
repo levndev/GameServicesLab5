@@ -55,7 +55,24 @@ public class YGManager : MonoBehaviour
 ```
 2) Проверить авторизацию
 #### Работа 2: 
-1) Добавить сохранение рекорда очков:
+1) Добавить переменную для рекорда очков в класс SavesYG:
+```cs
+namespace YG
+{
+    [System.Serializable]
+    public class SavesYG
+    {
+        public bool isFirstSession = true;
+        public string language = "ru";
+        public bool feedbackDone;
+        public bool promptDone;
+
+        // Ваши сохранения
+        public int HighScore;
+    }
+}
+```
+2) Добавить сохранение рекорда очков:
 ```cs
 private void Quit()
 {
@@ -69,9 +86,12 @@ private void Quit()
 ```
 #### Работа 3: 
 1) Добавить показ рекорда очков в гл. меню
+!["screenshot"](Screenshots/1.PNG)
 2) Добавить показ имени игрока в игре
+!["screenshot"](Screenshots/2.PNG)
 #### Работа 4: 
-1) Добавить сохранение рекорда очков в таблицу лидеров
+1) Создать таблицу лидеров в консоли разработчика Яндекс игр
+2) Добавить сохранение рекорда очков в таблицу лидеров
 ```cs
 private void Quit()
 {
@@ -85,7 +105,26 @@ private void Quit()
 }
 ```
 #### Работа 5: 
-1) Создать класс AchievementSO:
+1) Добавить переменную для достижений в класс SavesYG:
+```cs
+namespace YG
+{
+    [System.Serializable]
+    public class SavesYG
+    {
+        public bool isFirstSession = true;
+        public string language = "ru";
+        public bool feedbackDone;
+        public bool promptDone;
+
+        // Ваши сохранения
+        public int HighScore;
+        public int[] Achievements;
+    }
+}
+
+```
+2) Создать класс AchievementSO:
 ```cs
 [CreateAssetMenu(menuName = "Dragon Picker/Achievement")]
 [Serializable]
@@ -97,7 +136,7 @@ public class AchievementSO : ScriptableObject
     public Sprite Icon;
 }
 ```
-2) Создать класс AchievementManager:
+3) Создать класс AchievementManager:
 ```cs
 public class AchievementManager : MonoBehaviour
 {
@@ -159,16 +198,68 @@ public class AchievementManager : MonoBehaviour
     }
 }
 ```
+4) Создать файлы достиженией в папке Resources/Achievements:
+!["screenshot"](Screenshots/5.PNG)
+5) Регистрировать выполнение достижений по уникальному ID:
+```cs
+// проигрыш
+if (shieldList.Count == 0)
+{
+    AchievementManager.Instance.CompleteAchievement(1);
+    Quit();
+}
+```
 ## Задание 2
 ### Описать не менее трех дополнительных функций Яндекс SDK, которые могут быть интегрированы в игру. 
 1. Реклама - показ рекламы с возможной наградой
-2. Внутриигровые покупки - и так понятно
+2. Внутриигровые покупки
 3. Ярлык на рабочем столе - запуск игры с ярлыка на р. столе
 4. Оценка игры - просьба оценить игру с возможной наградой
 ## Задание 3
-### Текст задания
+### Доработать стилистическое оформление списка лидеров и системы достижений, реализованных в задании 1.
+1) Создать префаб для достижения
+!["screenshot"](Screenshots/3.PNG)
+1) Создать класс AchievementsMenu
+```cs
+public class AchievementsMenu : MonoBehaviour
+{
+    public GameObject ScrollViewContent;
+    public GameObject AchievementPanelPrefab;
+    void Start()
+    {
+        foreach (var achievement in AchievementManager.Instance.allAchievements.Values.OrderBy(a => a.UniqueID))
+        {
+            var panel = Instantiate(AchievementPanelPrefab, ScrollViewContent.transform);
+            if (AchievementManager.Instance.completedAchievements.ContainsKey(achievement.UniqueID))
+            {
+                panel.GetComponent<Image>().color = Color.green;
+            }
+            else
+            {
+                panel.GetComponent<Image>().color = Color.red;
+            }
+            var icon = panel.transform.Find("Icon").GetComponent<Image>();
+            icon.sprite = achievement.Icon;
+            var title = panel.transform.Find("Title").GetComponent<TextMeshProUGUI>();
+            title.text = achievement.Name;
+            var text = panel.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+            text.text = achievement.Text;
+        }
+    }
+}
+```
+1) Создать меню с ScrollView и повесить на него AchievementsMenu
+!["screenshot"](Screenshots/1.gif)
+1) Для лидерборда взять префаб Leaderboard Advanced из плагина PluginYG
+2) Настроить префаб под наше приложение
+3) Создать меню с этим префабом
+!["screenshot"](Screenshots/4.PNG)
 ## Выводы
 Научился:
+- Сохранять данные в облаке яндекс игр
+- Делать лидерборды в яндекс играх и в юнити
+- Делать систему достижений в юнити
+- Кранчить
 ## Powered by
 
 **BigDigital Team: Denisov | Fadeev | Panov**
